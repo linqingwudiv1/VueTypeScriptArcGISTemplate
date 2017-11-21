@@ -1,0 +1,8 @@
+/build/
+/config/
+/dist/
+/*.js
+/test/unit/coverage/
+/src/components/HelloWorld.vue
+/src/components/GISMapExam/index.ts
+/src/components/TypeTest/TypeTest.ts

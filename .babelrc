@@ -1,0 +1,13 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false
+    }],
+    "stage-2"
+  ],
+  "plugins": ["transform-runtime","transform-decorators-legacy"],
+  "env": {
+    "test": {
+      "presets": ["env", "stage-2"]    }
+  }
+}
