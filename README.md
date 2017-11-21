@@ -1,6 +1,6 @@
-# myproject
+# Vue and typescript Template
 
-> A Vue.js project
+> Vue2.x+Element-UI 2.x+TypeScript2.x+EChart3.x+ArcGIS Example
 
 ## Build Setup
 
