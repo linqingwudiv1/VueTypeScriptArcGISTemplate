@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home/index.vue'
-import gismapexam from '@/components/Home/component/GisMapExam/index.vue'
-import DataTable from '@/components/Home/component/DataTable/index.vue'
-import index from '@/components/Home/component/index.vue'
+import Home from '@/components/DevHome/index.vue'
+import gismapexam from '@/components/DevHome/component/GisMapExam/index.vue'
+import DataTable from '@/components/DevHome/component/DataTable/index.vue'
+import index from '@/components/DevHome/component/index.vue'
+
 Vue.use(Router)
 
 export default new Router({
