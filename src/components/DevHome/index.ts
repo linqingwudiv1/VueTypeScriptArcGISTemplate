@@ -12,16 +12,16 @@ import moment from 'moment'
 })
 
 export default class TestHomeComponent extends Vue {
-  mounted ()
-  {
+  mounted () {
 
     console.log('Hello Vue of TypeScript On: ' + moment().format('YYYY-MM-DD HH:mm:ss'));
     this.$message({
       message: 'Hello Vue of TypeScript On: ' + moment().format('YYYY-MM-DD HH:mm:ss'),
       type: 'success',
-      duration:8000
+      duration: 8000
     });
-    this.$router.push({path:'/index'})
+    this.$router.push({path: '/index'});
+
     console.log(Helper);
   }
 }

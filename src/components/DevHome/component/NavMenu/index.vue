@@ -20,6 +20,10 @@
         <i class="el-icon-setting"></i>
         <span slot="title">表格与EChart</span>
       </el-menu-item>
+      <el-menu-item index="/threeExam">
+        <i class="el-icon-setting"></i>
+        <span slot="title">ThreeJS例子</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
