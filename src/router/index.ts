@@ -15,14 +15,14 @@ export default new Router({
       component: Home,
       children: [
         {
-          path: '/gismapexam',
-          name: 'gismapexam',
-          component: gismapexam
-        },
-        {
           path: '/index',
           name: 'index',
           component: index
+        },
+        {
+          path: '/gismapexam',
+          name: 'gismapexam',
+          component: gismapexam
         },
         {
           path: '/DataTable',

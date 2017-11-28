@@ -12,7 +12,7 @@
   #TestviewDiv {
     width: 100%;
     height:100%;
-    background: red;
+    background: lightgray;
     margin: 5px;
   }
 </style>

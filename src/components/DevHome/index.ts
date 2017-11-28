@@ -15,11 +15,11 @@ export default class TestHomeComponent extends Vue {
   mounted ()
   {
 
-    console.log('Hello Vue of TypeScript On ' + moment().format('YYYY-MM-DD HH:mm:ss'));
+    console.log('Hello Vue of TypeScript On: ' + moment().format('YYYY-MM-DD HH:mm:ss'));
     this.$message({
-      message: 'Hello Vue of TypeScript On ' + moment().format('YYYY-MM-DD HH:mm:ss'),
+      message: 'Hello Vue of TypeScript On: ' + moment().format('YYYY-MM-DD HH:mm:ss'),
       type: 'success',
-      duration:5000
+      duration:8000
     });
     this.$router.push({path:'/index'})
     console.log(Helper);
