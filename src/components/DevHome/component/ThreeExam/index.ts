@@ -38,16 +38,14 @@ export default class TestHomeThreeJSComponent extends Vue {
     cube.position.z = -10;
     camera.position.z = 0;
 
-    var animate = function () {
-      requestAnimationFrame( animate );
-
+    var tick = function () {
       cube.rotation.x += 0.01;
       cube.rotation.y += 0.01;
-
       renderer.render(scene, camera);
+      requestAnimationFrame( tick );
     };
 
-    animate();
+    tick();
 
     this.$message({
       showClose: true,
