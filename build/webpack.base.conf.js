@@ -39,6 +39,7 @@ module.exports = {
           emitWarning: !config.dev.showEslintErrorsInOverlay
         }
       }] : []),
+      /*--------l.q-------*/
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
@@ -46,7 +47,12 @@ module.exports = {
         options: {
           appendTsSuffixTo: [/\.vue$/],
         }
-      },
+      },/*
+      {
+        test: /three\/examples\/js/,
+        use: 'imports-loader?THREE=three'
+      },*/
+      /*--------l.q-------*/
       {
         test: /\.vue$/,
         loader: 'vue-loader',

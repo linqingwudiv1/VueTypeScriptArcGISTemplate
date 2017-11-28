@@ -4,6 +4,7 @@ import Home from '@/components/DevHome/index.vue'
 import gismapexam from '@/components/DevHome/component/GisMapExam/index.vue'
 import DataTable from '@/components/DevHome/component/DataTable/index.vue'
 import index from '@/components/DevHome/component/index.vue'
+import three from '@/components/DevHome/component/ThreeExam/index.vue'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
           path: '/DataTable',
           name: 'DataTable',
           component: DataTable
+        },
+        {
+          path: '/threeExam',
+          name: 'threeExam',
+          component: three
         }
       ]
     }
