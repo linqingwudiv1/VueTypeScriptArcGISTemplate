@@ -1,6 +1,6 @@
 <template>
   <div id="TestIndex">
-    <el-tabs v-model="tabName" type="card" @tab-click="handleClick">
+    <el-tabs v-model="tabName" type="card">
       <el-tab-pane label="Vue" name="1">
         <iframe src="https://cn.vuejs.org/index.html">
         </iframe>
