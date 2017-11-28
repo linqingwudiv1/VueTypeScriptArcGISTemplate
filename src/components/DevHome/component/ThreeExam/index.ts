@@ -9,7 +9,6 @@ import Component from 'vue-class-component'
 export default class TestHomeThreeJSComponent extends Vue {
   mounted ()
   {
-
     console.log('---threeJS---');
     var THREE = require('three');
 
@@ -45,10 +44,10 @@ export default class TestHomeThreeJSComponent extends Vue {
 
     animate();
 
-    /*
-
-
-    document.getElementById('TestThreeJS').appendChild( renderer.domElement );
-    */
+    this.$message({
+      showClose: true,
+      message: 'ThreeJS Init Complate',
+      type: 'success'
+    });
   }
 }
