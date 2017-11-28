@@ -15,7 +15,10 @@ export default class TestHomeThreeJSComponent extends Vue {
     let scene = new THREE.Scene();
     let canvasobj = document.getElementById('TestThreeJS');
     let camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-    let renderer = new THREE.WebGLRenderer();
+    let renderer = new THREE.WebGLRenderer(
+      {
+        antialias: true
+      });
 
     console.log(scene);
     console.log(camera);
@@ -26,18 +29,20 @@ export default class TestHomeThreeJSComponent extends Vue {
 
     canvasobj.appendChild(renderer.domElement);
 
-    var geometry = new THREE.BoxGeometry( 2, 2, 2 );
+    var geometry = new THREE.BoxGeometry( 5, 5, 5 );
     var material = new THREE.MeshBasicMaterial( { color: 0x00ff11 } );
     var cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
 
-    camera.position.z = 5;
+    console.log(cube);
+    cube.position.z = -10;
+    camera.position.z = 0;
 
     var animate = function () {
       requestAnimationFrame( animate );
 
-      cube.rotation.x += 0.05;
-      cube.rotation.y += 0.05;
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
 
       renderer.render(scene, camera);
     };
