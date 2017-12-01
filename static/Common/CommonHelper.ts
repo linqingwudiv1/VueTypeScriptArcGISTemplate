@@ -11,7 +11,6 @@ class CommonHelper {
   //数据列表 去重
   public distinct(sourList:any[], target:string):any
   {
-    console.log('distinct');
     let ret_list = [];
     if (sourList.length > 0)
     {
