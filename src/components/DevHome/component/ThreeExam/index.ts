@@ -4,9 +4,10 @@ import Component from 'vue-class-component'
 @Component({
   components: {
   }
-})
-
-export default class TestHomeThreeJSComponent extends Vue {
+}
+)
+export default class TestHomeThreeJSComponent extends Vue
+{
   mounted ()
   {
     console.log('---threeJS---');

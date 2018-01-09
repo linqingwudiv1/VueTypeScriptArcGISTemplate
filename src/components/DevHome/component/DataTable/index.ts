@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import axios from 'axios'
 import echarts from 'echarts'
+
 @Component({
+
 })
 export default class TestDataTableComponent extends Vue {
   tableData:any =[{
@@ -48,14 +50,14 @@ export default class TestDataTableComponent extends Vue {
   OnClick():void
   {
 
-    let ret = fetch('http://10.209.240.2:18081/LTE_WebAPI/api/CSFB/NECompeting_KPIList').then(function (res)
+    let ret = fetch('http://10.209.240.2:18081/LTE_WebAPI/api/CSFB/NECompeting_KPIList').then(function (res:any)
     {
       return res.json();
-    }).then(function (res) {
+    }).then(function (res:any) {
       console.log(res);
     });
 
-    axios.get('http://10.209.240.2:18081/LTE_WebAPI/api/CSFB/NECompeting_KPIList').then(function (res) {
+    axios.get('http://10.209.240.2:18081/LTE_WebAPI/api/CSFB/NECompeting_KPIList').then(function (res:any) {
       console.log('axios test');
       console.log(res);
       console.log(res)
