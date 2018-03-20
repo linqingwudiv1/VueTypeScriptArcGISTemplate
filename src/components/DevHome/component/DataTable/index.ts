@@ -2,11 +2,16 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import axios from 'axios'
 import echarts from 'echarts'
+import {Prop} from "vue-property-decorator";
 
 @Component({
 
 })
 export default class TestDataTableComponent extends Vue {
+
+  bDialog_visiable:boolean = true;
+  requrl:string = 'http://element.eleme.io/versions.json';
+  resdata:string = '程序猿永不为奴';
   tableData:any =[{
     date: '2016-05-02',
     name: '王小虎',
@@ -24,6 +29,7 @@ export default class TestDataTableComponent extends Vue {
     name: '王小虎',
     address: '上海市普陀区金沙江路 1516 弄'
   }] ;
+
   mounted() {
     console.log('HomeComponent');
     console.log(echarts);
@@ -47,20 +53,19 @@ export default class TestDataTableComponent extends Vue {
       }]};
     myEchart.setOption(option);
   }
+  OnClick_ReqData():void
+  {
+    let _this = this;
+
+    axios.get(this.requrl).then(res=>
+    {
+      console.log(res.data);
+      _this.resdata = res.data;
+    });
+
+  }
   OnClick():void
   {
-
-    let ret = fetch('http://10.209.240.2:18081/LTE_WebAPI/api/CSFB/NECompeting_KPIList').then(function (res:any)
-    {
-      return res.json();
-    }).then(function (res:any) {
-      console.log(res);
-    });
-
-    axios.get('http://10.209.240.2:18081/LTE_WebAPI/api/CSFB/NECompeting_KPIList').then(function (res:any) {
-      console.log('axios test');
-      console.log(res);
-      console.log(res)
-    });
+    this.bDialog_visiable = true;
   }
 }

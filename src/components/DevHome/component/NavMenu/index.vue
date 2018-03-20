@@ -8,22 +8,12 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
-      <el-menu-item index="/index">
-        <i class="el-icon-menu"></i>
-        <span slot="title">主页</span>
-      </el-menu-item>
-      <el-menu-item index="/gismapexam">
-        <i class="el-icon-menu"></i>
-        <span slot="title">GIS地图</span>
-      </el-menu-item>
-      <el-menu-item index="/DataTable">
-        <i class="el-icon-setting"></i>
-        <span slot="title">表格与EChart</span>
-      </el-menu-item>
-      <el-menu-item index="/threeExam">
-        <i class="el-icon-setting"></i>
-        <span slot="title">ThreeJS例子</span>
-      </el-menu-item>
+      <template v-for="itemdata in navdata">
+        <el-menu-item v-bind:index="itemdata.routeurl" >
+          <i class="el-icon-menu"></i>
+          <span slot="title">{{itemdata.title}}</span>
+        </el-menu-item>
+      </template>
     </el-menu>
   </div>
 </template>

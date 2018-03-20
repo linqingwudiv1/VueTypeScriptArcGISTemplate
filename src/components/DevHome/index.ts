@@ -5,6 +5,7 @@ import axios from 'axios'
 import NavMenu from './component/NavMenu/index.vue'
 import Helper from '../../../static/Common/Helper'
 import moment from 'moment'
+import {Prop} from "vue-property-decorator";
 @Component({
   components: {
     navmenu: NavMenu
@@ -12,6 +13,23 @@ import moment from 'moment'
 })
 
 export default class TestHomeComponent extends Vue {
+
+  public navdata:any =
+    [
+      {
+        title:'主页',
+        routeurl:'/index'
+      },{
+        title:'GIS地图',
+        routeurl:'/gismapexam'
+      }, {
+        title:'表格与ECharts',
+        routeurl:'/DataTable'
+      },{
+        title:'ThreeJS例子',
+        routeurl:'/threeExam'
+      }
+    ];
   mounted () {
 
     console.log('Hello Vue of TypeScript On: ' + moment().format('YYYY-MM-DD HH:mm:ss'));

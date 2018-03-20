@@ -7,6 +7,8 @@ import Component from 'vue-class-component'
 
 export default class TestHomeIndexComponent extends Vue {
   tabName:string ='1';
+
+
   mounted ()
   {
   }

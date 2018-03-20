@@ -1,10 +1,30 @@
 <template>
   <div class="TestDataTable">
     <h3>嘻嘻嘻</h3>
-    <el-button type="primary" v-on:click="OnClick">请求测试</el-button>
+    <el-button type="primary" v-on:click="OnClick">HTTP请求展示</el-button>
     <hr/>
 
-    <div id="echart" style="background: red;width: 100%;height: 360px;"></div>
+
+    <el-dialog title="接口查询" v-bind:visible.sync="bDialog_visiable" width="40%">
+      <el-row v-bind:gutter="10">
+        <el-col v-bind:span="20">
+          <el-input v-model="requrl"></el-input>
+        </el-col>
+        <el-col v-bind:span="4">
+          <el-button type="primary" style="width: 100%" v-on:click="OnClick_ReqData">
+            接口请求
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-row style="padding-top: 24px">
+        <el-input type="textarea"
+                  :rows="10" v-model="resdata">
+
+        </el-input>
+      </el-row>
+    </el-dialog>
+
+    <div id="echart" style="width: 100%;height: 360px;"></div>
 
     <el-table
       v-bind:data="tableData"
@@ -24,6 +44,7 @@
         label="地址">
       </el-table-column>
     </el-table>
+
   </div>
 </template>
 <script lang="ts" src="./index.ts">

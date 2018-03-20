@@ -8,7 +8,7 @@
     <div class="TestMain">
       <el-row>
         <el-col :span="5">
-          <navmenu></navmenu>
+          <navmenu v-bind:navdata="navdata"></navmenu>
         </el-col>
         <el-col :span="19">
           <router-view style="width: 100%;height: calc(100% - 15px);"></router-view>
