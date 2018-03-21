@@ -33,7 +33,7 @@
     </el-tabs>
   </div>
 </template>
-<script lang="ts" src="./index.ts"></script>
+<script lang="ts" src="./home.ts"></script>
 <style lang="stylus" rel="stylesheet/stylus">
   #TestIndex
     .el-tab-pane
