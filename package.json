@@ -16,7 +16,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "echarts": "^4.0.4",
-    "element-ui": "^2.2.2",
+    "element-ui": "^2.3.0",
     "esri-loader": "^2.2.0",
     "moment": "^2.21.0",
     "three": "^0.91.0",

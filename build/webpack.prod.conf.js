@@ -60,10 +60,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'testing'
-        ? 'index.html'
-        : config.build.index,
-      template: 'index.html',
+      filename: config.build.DevNav,
+      template: 'src/startup/DevNav/app.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -74,11 +72,11 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
-      chunks: ['manifest', 'vendor', 'app']
+      chunks: ['manifest', 'vendor', 'DevNav']
     }),
     new HtmlWebpackPlugin({
-      filename: config.build.one,
-      template: 'index.html',
+      filename: config.build.DevHome,
+      template: 'src/startup/DevHome/app.html',
       inject: true,
       minify: {
         removeComments: true,
@@ -89,7 +87,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
-      chunks: ['manifest', 'vendor', 'one']
+      chunks: ['manifest', 'vendor', 'DevHome']
     }),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),

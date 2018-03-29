@@ -21,18 +21,14 @@
 
 <script lang="ts" src="./index.ts">
 </script>
-<style>
-  .TestTypeTest {
-  }
-  .TestMain {
+<style lang="stylus">
+  .TestTypeTest 
+    margin : 0px;
+  .TestMain 
     height:calc(100vh - 80px);
     text-align: left;
-  }
-
-  .TestMain .el-row {
+  .TestMain .el-row 
     height: 100%;
-  }
-  .TestMain .el-col {
+  .TestMain .el-col
     height: 100%;
-  }
 </style>
