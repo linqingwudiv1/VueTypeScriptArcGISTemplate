@@ -9,7 +9,7 @@
       text-color="#fff"
       active-text-color="#ffd04b">
       <template v-for="itemdata in navdata">
-        <el-menu-item v-bind:index="itemdata.routeurl" >
+        <el-menu-item v-bind:key="itemdata.key" v-bind:index="itemdata.routeurl">
           <i class="el-icon-menu"></i>
           <span slot="title">{{itemdata.title}}</span>
         </el-menu-item>

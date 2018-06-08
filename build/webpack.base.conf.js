@@ -43,16 +43,32 @@ module.exports = {
       /*--------l.q-------*/
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
+        exclude: /node_modules/,
+        use: [
+          { loader: 'cache-loader' },
+          {
+            loader: 'thread-loader',
+            options: {
+                // there should be 1 cpu for the fork-ts-checker-webpack-plugin
+                workers: require('os').cpus().length - 1,
+            },
+          },
+          {
+            loader: 'ts-loader',
+            options:{
+              happyPackMode: true,
+              appendTsSuffixTo: [/\.vue$/],
+              transpileOnly: true,
+            }
+          }
+        ],
+
+        /*
         exclude: /node_modules/,
         options: {
           appendTsSuffixTo: [/\.vue$/],
-        }
-      },/*
-      {
-        test: /three\/examples\/js/,
-        use: 'imports-loader?THREE=three'
-      },*/
+        }*/
+      },
       /*--------l.q-------*/
       {
         test: /\.vue$/,
@@ -62,6 +78,9 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        options:{
+          presets:['es2015']
+        },
         include: [resolve('src'), resolve('test')]
       },
       {
