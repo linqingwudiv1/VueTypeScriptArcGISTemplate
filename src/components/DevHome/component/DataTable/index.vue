@@ -3,7 +3,7 @@
     <h3>嘻嘻嘻</h3>
     <el-button type="primary" v-on:click="OnClick">HTTP请求展示</el-button>
     <hr/>
-
+    <img/>
 
     <el-dialog title="接口查询" v-bind:visible.sync="bDialog_visiable" width="40%">
       <el-row v-bind:gutter="10">
@@ -25,7 +25,6 @@
     </el-dialog>
 
     <div id="echart" style="width: 100%;height: 360px;"></div>
-
     <el-table
       v-bind:data="tableData"
       style="width: 100%">
@@ -49,5 +48,8 @@
 </template>
 <script lang="ts" src="./index.ts">
 </script>
-<style>
+<style lang="stylus">
+.TestDataTable
+  h3
+    background-image :url('/logo.png');
 </style>

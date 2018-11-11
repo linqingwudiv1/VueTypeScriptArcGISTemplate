@@ -62,12 +62,6 @@ module.exports = {
             }
           }
         ],
-
-        /*
-        exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-        }*/
       },
       /*--------l.q-------*/
       {

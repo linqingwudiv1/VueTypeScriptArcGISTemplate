@@ -18,10 +18,9 @@
   </div>
 </template>
 <script lang="ts" src="./index.ts"></script>
-<style>
-  .TestHomeNavMenu {
-    width: 100%;
-    height: calc(100%);
-    background: #545c64;
-  }
+<style lang="stylus">
+.TestHomeNavMenu
+  width: 100%;
+  height: calc(100%);
+  background: #545c64;
 </style>

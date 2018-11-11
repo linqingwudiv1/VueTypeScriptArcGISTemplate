@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import axios from 'axios'
 import echarts from 'echarts'
-import {Prop} from "vue-property-decorator";
+import {Prop,Watch} from "vue-property-decorator";
 
 @Component({
 
