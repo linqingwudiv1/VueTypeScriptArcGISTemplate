@@ -1,15 +1,24 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import moment from 'moment'
 
 @Component({
   components: {
   }
-}
-)
+})
 export default class TestHomeThreeJSComponent extends Vue
 {
+
   mounted ()
   {
+    console.log($('body'));
+    console.log(WEBGL);
+    this.$message({
+      message: 'Hello Vue of Three On: ' + moment().format('YYYY-MM-DD HH:mm:ss'),
+      type: 'success',
+      duration: 8000
+    });
+    
     console.log('---threeJS---');
     var THREE = require('three');
 

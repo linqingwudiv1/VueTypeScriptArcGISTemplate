@@ -2,8 +2,10 @@
 /config/
 /dist/
 /*.js
+**/*.ts
 /test/unit/coverage/
 /src/components/HelloWorld.vue
 /src/components/GISMapExam/index.ts
+/src/components/ThreeExam/index.ts
 /src/components/TypeTest/TypeTest.ts
 /static/config.js

@@ -13,6 +13,9 @@ const NavMenu = Vue.component('NavMenu', function (resolve:any){
 });
 */
 //console.log(NavMenu);
+declare const $:any;
+declare const WebGL:any;
+
 
 @Component({
   components: {
