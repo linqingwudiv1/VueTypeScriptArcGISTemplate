@@ -1,16 +1,13 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import {Prop} from "vue-property-decorator";
 import moment from 'moment'
 
-@Component({
-  components: {
-  }
-})
-export default class TestHomeThreeJSComponent extends Vue
-{
-
+@Component({})
+export default class TestHomeThreeJSComponent extends Vue {
   mounted ()
   {
+    
     console.log($('body'));
     console.log(WEBGL);
     this.$message({
@@ -20,7 +17,7 @@ export default class TestHomeThreeJSComponent extends Vue
     });
     
     console.log('---threeJS---');
-    var THREE = require('three');
+    //var THREE = require('three');
 
     let scene = new THREE.Scene();
     let canvasobj = document.getElementById('TestThreeJS');
@@ -39,16 +36,16 @@ export default class TestHomeThreeJSComponent extends Vue
 
     canvasobj.appendChild(renderer.domElement);
 
-    var geometry = new THREE.BoxGeometry( 5, 5, 5 );
-    var material = new THREE.MeshBasicMaterial( { color: 0x00ff11 } );
-    var cube = new THREE.Mesh( geometry, material );
+    let geometry = new THREE.BoxGeometry( 5, 5, 5 );
+    let material = new THREE.MeshBasicMaterial( { color: 0x00ff11 } );
+    let cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
 
     console.log(cube);
     cube.position.z = -10;
     camera.position.z = 0;
 
-    var tick = function () {
+    let tick = function () {
       cube.rotation.x += 0.01;
       cube.rotation.y += 0.01;
       renderer.render(scene, camera);

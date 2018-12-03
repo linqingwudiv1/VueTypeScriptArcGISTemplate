@@ -9,7 +9,7 @@ import Component from 'vue-class-component'
 export default class TestHomeIndexComponent extends Vue {
   tabName:string ='0';
 
-
+  public testdata:any = '';
   mounted ()
   {
   }

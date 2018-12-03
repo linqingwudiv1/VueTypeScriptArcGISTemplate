@@ -5,8 +5,9 @@ import esriLoader from 'esri-loader'
 @Component({
 })
 export default class TestGISMapExamComponent extends Vue {
+  public tc:any = [];
   mounted() {
-
+    
     esriLoader.loadModules
     (
       ['esri/views/MapView', 'esri/WebMap']
