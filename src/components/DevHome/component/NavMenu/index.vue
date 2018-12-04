@@ -17,7 +17,7 @@
     </el-menu>
   </div>
 </template>
-<script src="./index.ts"></script>
+<script lang="ts" src="./index.ts"></script>
 <style lang="stylus">
 .TestHomeNavMenu
   width: 100%;
