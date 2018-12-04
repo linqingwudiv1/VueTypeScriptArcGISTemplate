@@ -3,6 +3,20 @@ import Component from 'vue-class-component';
 import {Prop} from "vue-property-decorator";
 import moment from 'moment'
 
+
+/** threejs */
+declare const THREE:any;
+declare const WEBGL:any;
+declare const clothFunction:any;
+declare const cloth:any;
+declare const ballSize:any;
+declare const windForce:any;
+declare const ballPosition:any;
+declare const simulate:any;
+declare const Stats:any;
+/** threejs */
+
+
 @Component({})
 export default class TestHomeThreeJSComponent extends Vue {
   mounted ()
