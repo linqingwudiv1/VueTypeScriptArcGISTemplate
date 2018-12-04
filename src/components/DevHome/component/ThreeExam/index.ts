@@ -165,7 +165,7 @@ var pins:any = [];
 
 
 var wind = true;
-var windStrength = 1;
+var windStrength = 0.2;
 var windForce = new THREE.Vector3( 0, 0, 0 );
 
 var ballPosition = new THREE.Vector3( 0, - 45, 0 );
