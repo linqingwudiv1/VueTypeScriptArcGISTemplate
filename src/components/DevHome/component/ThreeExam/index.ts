@@ -68,7 +68,7 @@ class Cloth
   {
     w = w || 10;
     h = h || 10;
-    this.w = w;
+    this.w = w ;
     this.h = h;
   
     var particles = [];
@@ -165,7 +165,8 @@ var pins:any = [];
 
 
 var wind = true;
-var windStrength = 0.2;
+var windStrength = 1000;
+console.log(windStrength);
 var windForce = new THREE.Vector3( 0, 0, 0 );
 
 var ballPosition = new THREE.Vector3( 0, - 45, 0 );
