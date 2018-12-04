@@ -325,10 +325,15 @@ function simulate( time:any ) {
 
 @Component({})
 export default class TestHomeThreeJSComponent extends Vue {
+	public togglePins() 
+	{
+		pins = this.pinsFormation[ ~~ ( Math.random() * this.pinsFormation.length ) ];
+	}
+
+	public pinsFormation:any = [];
   mounted ()
   {
     console.log($('body'));
-    console.log(WEBGL);
     this.$message({
       message: 'Hello Vue of Three On: ' + moment().format('YYYY-MM-DD HH:mm:ss'),
       type: 'success',
@@ -337,23 +342,20 @@ export default class TestHomeThreeJSComponent extends Vue {
 
 
 			/* testing cloth simulation */
-			var pinsFormation:any = [];
-			pinsFormation.push( pins );
+			this.pinsFormation.push( pins );
 			pins = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
-			pinsFormation.push( pins );
+			this.pinsFormation.push( pins );
 			pins = [ 0 ];
-			pinsFormation.push( pins );
+			this.pinsFormation.push( pins );
 			pins = []; // cut the rope ;)
-			pinsFormation.push( pins );
+			this.pinsFormation.push( pins );
 			pins = [ 0, cloth.w ]; // classic 2 pins
-			pinsFormation.push( pins );
-			pins = pinsFormation[ 1 ];
-			function togglePins() {
-				pins = pinsFormation[ ~~ ( Math.random() * pinsFormation.length ) ];
-			}
+			this.pinsFormation.push( pins );
+			pins = this.pinsFormation[ 1 ];
+
 			if ( WEBGL.isWebGLAvailable() === false ) {
 				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
-      }
+      		}
       
 			init();
 			animate();
@@ -362,15 +364,15 @@ export default class TestHomeThreeJSComponent extends Vue {
 				// scene
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xcce0ff );
-				scene.fog = new THREE.Fog( 0xcce0ff, 500, 10000 );
+				scene.fog = new THREE.Fog( 0xcce0ff, 500, 1000000 );
 				// camera
-				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 1, 100000 );
 				camera.position.set( 1000, 50, 1500 );
 				// lights
 				scene.add( new THREE.AmbientLight( 0x666666 ) );
 				var light = new THREE.DirectionalLight( 0xdfebff, 1 );
 				light.position.set( 50, 200, 100 );
-				light.position.multiplyScalar( 1.3 );
+				light.position.multiplyScalar( 1.6 );
 				light.castShadow = true;
 				light.shadow.mapSize.width = 1024;
 				light.shadow.mapSize.height = 1024;
@@ -383,13 +385,18 @@ export default class TestHomeThreeJSComponent extends Vue {
 				scene.add( light );
 				// cloth material
 				var loader = new THREE.TextureLoader();
-				var clothTexture = loader.load( 'textures/patterns/circuit_pattern.png' );
+				var clothTexture = loader.load( 'textures/flag.jpg');
 				clothTexture.anisotropy = 16;
-				var clothMaterial = new THREE.MeshLambertMaterial( {
+				var clothMaterial = new THREE.MeshStandardMaterial( {
 					map: clothTexture,
 					side: THREE.DoubleSide,
 					alphaTest: 0.5
+
 				} );
+
+				clothMaterial.roughness = 1; 
+				clothMaterial.bump = 0.1; 
+				clothMaterial.metalness = 0.0; 
 				// cloth geometry
 				clothGeometry = new THREE.ParametricBufferGeometry( clothFunction, cloth.w, cloth.h );
 				// cloth mesh
@@ -397,11 +404,14 @@ export default class TestHomeThreeJSComponent extends Vue {
 				object.position.set( 0, 0, 0 );
 				object.castShadow = true;
 				scene.add( object );
+				
 				object.customDepthMaterial = new THREE.MeshDepthMaterial( {
 					depthPacking: THREE.RGBADepthPacking,
 					map: clothTexture,
 					alphaTest: 0.5
 				} );
+
+
 				// sphere
 				var ballGeo = new THREE.SphereBufferGeometry( ballSize, 32, 16 );
 				var ballMaterial = new THREE.MeshLambertMaterial();
@@ -409,51 +419,68 @@ export default class TestHomeThreeJSComponent extends Vue {
 				sphere.castShadow = true;
 				sphere.receiveShadow = true;
 				scene.add( sphere );
-				// ground
-				var groundTexture = loader.load( 'textures/terrain/grasslight-big.jpg' );
+			
+				/** sky start */
+
+				var skyGeo = new THREE.SphereGeometry(10000, 25, 25); 
+				var sky_t2d = loader.load( 'textures/equirectangular.png' );
+
+				var sky_mat = new THREE.MeshPhongMaterial({ map: sky_t2d});
+				sky_mat.transparent = true;    
+				sky_mat.opacity = 1;
+				sky_mat.side =  THREE.BackSide;
+
+				var sky = new THREE.Mesh(skyGeo,sky_mat);
+				sky.position.y = 0;
+				sky.rotation.x = 0;
+				sky.material.side = THREE.BackSide;
+				scene.add(sky);
+
+				/** sky end */
+
+				/**ground start */ 
+				var groundTexture = loader.load(  'textures/wood/hardwood2_diffuse.jpg');
+				var groundTexture_bump = loader.load(  'textures/wood/hardwood2_bump.jpg');
+				var groundTexture_roughness = loader.load(  'textures/wood/hardwood2_roughness.jpg');
 				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
 				groundTexture.repeat.set( 25, 25 );
 				groundTexture.anisotropy = 16;
-				var groundMaterial = new THREE.MeshLambertMaterial( { map: groundTexture } );
+
+				var groundMaterial = new THREE.MeshStandardMaterial( { map: groundTexture,bumpMap:groundTexture_bump,roughnessMap:groundTexture_roughness } );
+				groundMaterial.roughness = 0.1; 
+				groundMaterial.bump = 1; 
 				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial );
 				mesh.position.y = - 250;
 				mesh.rotation.x = - Math.PI / 2;
 				mesh.receiveShadow = true;
 				scene.add( mesh );
+				/**ground end */ 
+
 				// poles
-				var poleGeo = new THREE.BoxBufferGeometry( 5, 375, 5 );
+				var poleGeo = new THREE.BoxBufferGeometry( 15, 375, 15 );
 				var poleMat = new THREE.MeshLambertMaterial();
 				var mesh = new THREE.Mesh( poleGeo, poleMat );
-				mesh.position.x = - 125;
+				mesh.position.x = - 225;
 				mesh.position.y = - 62;
 				mesh.receiveShadow = true;
 				mesh.castShadow = true;
 				scene.add( mesh );
-				var mesh = new THREE.Mesh( poleGeo, poleMat );
-				mesh.position.x = 125;
-				mesh.position.y = - 62;
-				mesh.receiveShadow = true;
-				mesh.castShadow = true;
-				scene.add( mesh );
-				var mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 255, 5, 5 ), poleMat );
+				
+				var mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 400, 15, 15 ), poleMat );
 				mesh.position.y = - 250 + ( 750 / 2 );
-				mesh.position.x = 0;
+				mesh.position.x = -32;
 				mesh.receiveShadow = true;
 				mesh.castShadow = true;
 				scene.add( mesh );
 				var gg = new THREE.BoxBufferGeometry( 10, 10, 10 );
-				var mesh = new THREE.Mesh( gg, poleMat );
-				mesh.position.y = - 250;
-				mesh.position.x = 125;
+
+				var mesh = new THREE.Mesh( new THREE.BoxBufferGeometry( 30, 30, 30 ), poleMat );
+				mesh.position.y = -240;
+				mesh.position.x = -225;
 				mesh.receiveShadow = true;
 				mesh.castShadow = true;
 				scene.add( mesh );
-				var mesh = new THREE.Mesh( gg, poleMat );
-				mesh.position.y = - 250;
-				mesh.position.x = - 125;
-				mesh.receiveShadow = true;
-				mesh.castShadow = true;
-				scene.add( mesh );
+
 				// renderer
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
