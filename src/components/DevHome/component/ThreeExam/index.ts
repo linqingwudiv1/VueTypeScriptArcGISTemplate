@@ -391,7 +391,8 @@ export default class TestHomeThreeJSComponent extends Vue {
 				var clothMaterial = new THREE.MeshStandardMaterial( {
 					map: clothTexture,
 					side: THREE.DoubleSide,
-					alphaTest: 0.5
+					alphaTest: 0.5,
+					color:'red'
 
 				} );
 
@@ -423,19 +424,49 @@ export default class TestHomeThreeJSComponent extends Vue {
 			
 				/** sky start */
 
-				var skyGeo = new THREE.SphereGeometry(10000, 25, 25); 
-				var sky_t2d = loader.load( 'textures/equirectangular.png' );
+				// cube
+				var skybox = new THREE.CubeGeometry(10000, 10000, 10000);
 
-				var sky_mat = new THREE.MeshPhongMaterial({ map: sky_t2d});
-				sky_mat.transparent = true;    
-				sky_mat.opacity = 1;
-				sky_mat.side =  THREE.BackSide;
+				
+				var cubeMaterials = [
+				// back side
+				new THREE.MeshBasicMaterial({
+					map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/baronwatts/skybox_images/master/back.jpg'),
+					side: THREE.DoubleSide
+				}),
+				// front side
+				new THREE.MeshBasicMaterial({
+					map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/baronwatts/skybox_images/master/front.jpg'),
+					side: THREE.DoubleSide
+				}), 
+				// Top side
+				new THREE.MeshBasicMaterial({
+					map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/baronwatts/skybox_images/master/top.jpg'),
+					side: THREE.DoubleSide
+				}), 
+				// Bottom side
+				new THREE.MeshBasicMaterial({
+					map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/baronwatts/skybox_images/master/down.jpg'),
+					side: THREE.DoubleSide
+				}), 
+				// right side
+				new THREE.MeshBasicMaterial({
+					map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/baronwatts/skybox_images/master/right.png'),
+					side: THREE.DoubleSide
+				}), 
+				// left side
+				new THREE.MeshBasicMaterial({
+					map: new THREE.TextureLoader().load('https://raw.githubusercontent.com/baronwatts/skybox_images/master/left.jpg'),
+					side: THREE.DoubleSide
+				}) 
+				];
 
-				var sky = new THREE.Mesh(skyGeo,sky_mat);
-				sky.position.y = 0;
-				sky.rotation.x = 0;
-				sky.material.side = THREE.BackSide;
-				scene.add(sky);
+				//add cube & materials
+				var cubeMaterial = new THREE.MeshFaceMaterial(cubeMaterials);
+				var mesh_skybox = new THREE.Mesh(skybox, cubeMaterial);
+				mesh_skybox.position.y = 1000;
+				//scene.add(mesh_skybox);
+
 
 				/** sky end */
 
@@ -444,13 +475,13 @@ export default class TestHomeThreeJSComponent extends Vue {
 				var groundTexture_bump = loader.load(  'textures/wood/hardwood2_bump.jpg');
 				var groundTexture_roughness = loader.load(  'textures/wood/hardwood2_roughness.jpg');
 				groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-				groundTexture.repeat.set( 25, 25 );
+				groundTexture.repeat.set( 100, 100 );
 				groundTexture.anisotropy = 16;
 
 				var groundMaterial = new THREE.MeshStandardMaterial( { map: groundTexture,bumpMap:groundTexture_bump,roughnessMap:groundTexture_roughness } );
 				groundMaterial.roughness = 0.1; 
 				groundMaterial.bump = 1; 
-				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 20000, 20000 ), groundMaterial );
+				var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 50000, 50000 ), groundMaterial );
 				mesh.position.y = - 250;
 				mesh.rotation.x = - Math.PI / 2;
 				mesh.receiveShadow = true;
