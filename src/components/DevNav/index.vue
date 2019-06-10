@@ -2,7 +2,7 @@
   <div class="TestTypeTest">
     <el-row>
       <el-col style="background: #545c64;height: 64px;" v-bind:span="24">
-        <h2 style="color: white;text-align: left;">&nbsp;&nbsp;&nbsp;Vue2.x+Element-UI 2.x+TypeScript2.x+EChart3.x+ArcGIS Example</h2>
+        <h2 style="color: white;text-align: left;">&nbsp;&nbsp;&nbsp;Vue2.x + Element-UI 2.x + TypeScript2.x + EChart3.x + ArcGIS Example</h2>
       </el-col>
     </el-row>
     <div class="TestMain">

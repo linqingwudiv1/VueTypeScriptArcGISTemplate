@@ -14,13 +14,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "echarts": "^4.1.0",
-    "element-ui": "^2.4.11",
-    "esri-loader": "^2.5.0",
-    "moment": "^2.22.2",
-    "three": "^0.99.0",
-    "version": "^0.1.2",
+    "axios": "^0.19.0",
+    "echarts": "^4.2.1",
+    "element-ui": "^2.9.1",
+    "esri-loader": "^2.9.2",
+    "moment": "^2.24.0",
+    "three": "^0.105.2",
+    "paper": "^0.12.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.2",
     "vuex": "^3.0.1"

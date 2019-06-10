@@ -60,7 +60,7 @@ export default class TestDataTableComponent extends Vue {
   OnClick_ReqData():void
   {
     let _this = this;
-
+    
     axios.get(this.requrl).then(res=>
     {
       console.log(res.data);

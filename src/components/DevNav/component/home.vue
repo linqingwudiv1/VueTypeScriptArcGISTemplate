@@ -37,9 +37,15 @@
         </iframe>
       </el-tab-pane>
       <el-tab-pane label="ThreeJS" name="7">
-        <!-- <iframe src="https://threejs.org/">
-        </iframe> -->
+        <iframe src="https://threejs.org/">
+        </iframe>
       </el-tab-pane>
+
+      <el-tab-pane label="PaperJS" name="8">
+        <iframe src="http://paperjs.org/features/">
+        </iframe>
+      </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>

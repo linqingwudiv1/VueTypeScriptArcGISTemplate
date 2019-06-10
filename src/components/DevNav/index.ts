@@ -7,13 +7,6 @@ import Helper from '../../../static/Common/Helper'
 import moment from 'moment'
 import {Prop} from "vue-property-decorator";
 
-/*
-const NavMenu = Vue.component('NavMenu', function (resolve:any){
-  require('./component/NavMenu/index.vue')
-});
-*/
-//console.log(NavMenu);
-
 
 @Component({
   components: {
@@ -21,7 +14,7 @@ const NavMenu = Vue.component('NavMenu', function (resolve:any){
   }
 })
 export default class TestHomeComponent extends Vue {
-
+  //左侧导航
   public navdata:any =
     [
       {
@@ -40,6 +33,10 @@ export default class TestHomeComponent extends Vue {
         key:4,
         title:'ThreeJS例子',
         routeurl:'/threeExam'
+      },{
+        key:5,
+        title:'PaperJs例子',
+        routeurl:'/paperExam'
       }
     ];
   mounted () {

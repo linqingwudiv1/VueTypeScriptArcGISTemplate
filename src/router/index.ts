@@ -35,6 +35,11 @@ export default new Router({
           path: '/threeExam',
           name: 'threeExam',
           component: function(resolve:any ){ require(['@/components/DevNav/component/ThreeExam/index.vue'], resolve);} //three// () => import('@/components/DevHome/component/ThreeExam/index.vue') 
+        },
+        {
+          path: '/paperExam',
+          name: 'paperExam',
+          component: function(resolve:any ){ require(['@/components/DevNav/component/paperExam/index.vue'], resolve);} //three// () => import('@/components/DevHome/component/ThreeExam/index.vue') 
         }
       ]
     }

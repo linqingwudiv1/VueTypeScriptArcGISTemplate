@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import {Prop} from "vue-property-decorator";
 
+
+
 @Component({
 })
 export default class TestNavMenuComponent extends Vue {
@@ -13,7 +15,9 @@ export default class TestNavMenuComponent extends Vue {
   mounted(){
   }
 
-  beforeCreate(){
+  beforeCreate()
+  {
     console.log('beforeCreate');
   }
+
 }
