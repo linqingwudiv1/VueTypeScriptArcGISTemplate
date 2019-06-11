@@ -17,4 +17,7 @@
   height: calc(100% - 10px);
   background: lightgray;
   margin: 5px;
+  #paperCanvas
+    width:100%;
+    height:100%;
 </style>

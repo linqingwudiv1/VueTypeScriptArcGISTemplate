@@ -1,10 +1,12 @@
 {
-  "name": "VueTypeScriptTemplate",
+  "name": "vue-typescript-template",
   "version": "1.0.0",
   "description": "A Vue.js + TypeScript Template project",
   "author": "Lq <https://www.cnblogs.com/linqing><875191946@qq.com>",
   "private": true,
   "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest test/unit/specs --coverage",
@@ -22,8 +24,10 @@
     "three": "^0.105.2",
     "paper": "^0.12.1",
     "vue": "^2.5.17",
+    "vue-server-renderer": "^2.6.10",
     "vue-router": "^3.0.2",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuepress": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^9.6.40",
