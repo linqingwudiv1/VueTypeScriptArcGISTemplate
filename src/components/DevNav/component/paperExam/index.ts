@@ -81,18 +81,18 @@ export default class PaperJSExamComponent extends Vue {
   private createGrid(width:number, height:number) :void 
   {
 
-	for( let x = 0; x < width; x += this.SetupLength  )
+	for( let x = -width * 5; x < width * 5; x += this.SetupLength  )
 	{
-		let linePath = new Paper.Path.Line( new Paper.Point(x, 0), new Paper.Point(x, height) );
+		let linePath = new Paper.Path.Line( new Paper.Point(x, -height * 5), new Paper.Point(x, height * 5) );
 		linePath.name = 'gridLine';
 		linePath.strokeColor  = new Paper.Color(52, 52, 52, 0.5) ;
 		linePath.strokeWidth = ( x % (this.SetupLength * 5) == 0 ? 2 : 1 );
 		linePath.smooth();
 	}
 
-	for( let y = 0; y < height; y += this.SetupLength  )
+	for( let y = -height * 5; y < height * 5; y += this.SetupLength  )
 	{
-		let linePath = new Paper.Path.Line( new Paper.Point(0, y), new Paper.Point(width, y) );
+		let linePath = new Paper.Path.Line( new Paper.Point(-width * 5, y), new Paper.Point(width * 5, y) );
 		linePath.name = 'gridLine';
 		linePath.strokeColor  = new Paper.Color(52,52,52,0.5) ;
 
@@ -105,6 +105,7 @@ export default class PaperJSExamComponent extends Vue {
   {
 	let radiusDelta:number = this.values.maxRadius - this.values.minRadius;
 	let pointsDelta:number = this.values.maxPoints - this.values.minPoints;
+
 	for (let i = 0; i < this.values.paths; i++) 
 	{
 		let radius:number = this.values.minRadius + Math.random() * radiusDelta;
@@ -139,9 +140,11 @@ export default class PaperJSExamComponent extends Vue {
 	onMouseDown(event:Paper.ToolEvent) {
 		this.segment = this.path = null;
 
+
 		let hitResult:Paper.HitResult = this.paper.project.hitTest(event.point, this.hitOptions);
 
-		if (!hitResult)
+		if (!hitResult || 
+			(hitResult.item &&  hitResult.item.name == 'gridLine') )
 		{
 			return;
 		}
@@ -176,6 +179,7 @@ export default class PaperJSExamComponent extends Vue {
 					
 					break;
 				}
+
 			}
 		}
 
@@ -199,7 +203,6 @@ export default class PaperJSExamComponent extends Vue {
 		if (event.item && 
 			event.item.name != 'gridLine')
 		{
-			console.log(event.item);
 			event.item.selected = true;
 		}
 
@@ -207,6 +210,8 @@ export default class PaperJSExamComponent extends Vue {
 
 	onMouseDrag(event:ToolEvent) 
 	{
+
+
 		let modifiers = event.modifiers as any;
 		if (this.segment) 
 		{
@@ -219,8 +224,24 @@ export default class PaperJSExamComponent extends Vue {
 		}
 		else 
 		{
-			//console.log('-------------- drag -------------------------:', event.delta, ' ,   ' , event );
-			//this.paper.view.center = this.paper.view.center.add( event.delta.multiply(1));
+
+			this.paper.view.center = this.paper.view.center.add( event.delta.multiply(-0.4));
 		}
+	}
+
+	onMouseWheel(event:any)
+	{
+	
+	}
+	
+	ZoomIn():void
+	{
+		this.paper.view.zoom += 0.01;
+	}
+
+	ZoomOut():void
+	{
+		this.paper.view.zoom -= 0.01;
+
 	}
 }
