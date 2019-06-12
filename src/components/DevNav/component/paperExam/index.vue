@@ -20,4 +20,5 @@
   #paperCanvas
     width:100%;
     height:100%;
+    background :rgb(38,38,38);
 </style>

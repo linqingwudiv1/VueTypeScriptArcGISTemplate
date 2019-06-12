@@ -2,23 +2,50 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import Paper, { ToolEvent, Size } from 'paper'
 
+
+class SimplePanAndZoom
+{
+	public changeZoom(oldZoom:any, delta:number) 
+	{
+		let factor:any = 1.05;
+		if ( delta < 0 )
+		{
+			return oldZoom * factor;
+		}
+		if ( delta > 0 )
+		{
+			return oldZoom / factor;
+		}
+		return oldZoom;
+	}
+
+	public changeCenter(oldCenter:Paper.Point, deltaX:number, deltaY:number, factor:number)
+	{
+		let offset:Paper.Point = new Paper.Point (deltaX, -deltaY);
+		offset = offset.multiply (factor);
+		oldCenter.add(offset) ;
+	}
+}
+
+
 @Component({
 })
 export default class PaperJSExamComponent extends Vue {
 	public values:any = {
-		paths: 50,
-		minPoints: 5,
-		maxPoints: 15,
-		minRadius: 30,
+		paths: 50		,
+		minPoints: 5	,
+		maxPoints: 15	,
+		minRadius: 30	,
 		maxRadius: 90
 	};
 	
 	public hitOptions:any = {
-		segments: true,
-		stroke: true,
-		fill: true,
+		segments: true	,
+		stroke: true	,
+		fill: true		,
 		tolerance: 5
 	};
+	public SetupLength:number = 15;
 
 	public paper = new Paper.PaperScope();
 	public segment:Paper.Segment; 
@@ -35,17 +62,46 @@ export default class PaperJSExamComponent extends Vue {
 	
 		this.paper.setup(canvas);
 
+		let width:number =  canvas.width;
+		let height:number = canvas.height;
+
+		this.createGrid(width,height);
+		
 		//Event Bind
 		this.paper.tool = new Paper.Tool();
 		this.paper.tool.onMouseDown = this.onMouseDown;
 		this.paper.tool.onMouseUp = this.onMouseUp;
 		this.paper.tool.onMouseMove = this.onMouseMove;
 		this.paper.tool.onMouseDrag = this.onMouseDrag;
-
+		
 		this.createPaths();
+		this.paper.view.update();
+  	}
+
+  private createGrid(width:number, height:number) :void 
+  {
+
+	for( let x = 0; x < width; x += this.SetupLength  )
+	{
+		let linePath = new Paper.Path.Line( new Paper.Point(x, 0), new Paper.Point(x, height) );
+		linePath.name = 'gridLine';
+		linePath.strokeColor  = new Paper.Color(52, 52, 52, 0.5) ;
+		linePath.strokeWidth = ( x % (this.SetupLength * 5) == 0 ? 2 : 1 );
+		linePath.smooth();
+	}
+
+	for( let y = 0; y < height; y += this.SetupLength  )
+	{
+		let linePath = new Paper.Path.Line( new Paper.Point(0, y), new Paper.Point(width, y) );
+		linePath.name = 'gridLine';
+		linePath.strokeColor  = new Paper.Color(52,52,52,0.5) ;
+
+		linePath.strokeWidth = ( y % (this.SetupLength * 5) == 0 ? 2 : 1);
+		linePath.smooth();
+	}
   }
 
-  createPaths() 
+  private createPaths() :void
   {
 	let radiusDelta:number = this.values.maxRadius - this.values.minRadius;
 	let pointsDelta:number = this.values.maxPoints - this.values.minPoints;
@@ -59,20 +115,21 @@ export default class PaperJSExamComponent extends Vue {
 		let hue:number = Math.random() * 360;
 		path.fillColor = new Paper.Color({ hue: hue, saturation: 1, lightness: lightness });
 		path.strokeColor = new Paper.Color('black');
+		path.strokeWidth = 5;
 	};
   }
 
-   createBlob(center:Paper.Point, maxRadius:number, points:number): Paper.Path {
+  private createBlob(center:Paper.Point, maxRadius:number, points:number): Paper.Path {
  		let path = new Paper.Path();
  		path.closed = true;
- 		for (let i = 0; i < points; i++) {
- 			let delta = new Paper.Point({
+		 for (let i = 0; i < points; i++) 
+		 {
+ 			let delta = new Paper.Point(
+			{
 				length: (maxRadius * 0.5) + (Math.random() * maxRadius * 0.5),
 				angle: (360 / points) * i
-			}
- 			);
-
- 			path.add(center.add(delta) );
+			});
+ 			path.add( center.add(delta) );
  		}
  		path.smooth();
  		return path;
@@ -90,15 +147,17 @@ export default class PaperJSExamComponent extends Vue {
 		}
 
 		let modifiers:any = event.modifiers as any;
-		if (modifiers.shift) {
-			if (hitResult.type == 'segment') {
+		
+		if (modifiers.shift) 
+		{
+			if (hitResult.type == 'segment') 
+			{
 				hitResult.segment.remove();
-			};
+			}
 			return;
 		}
-		
-	
-		if (hitResult) {
+
+		if ( hitResult ) {
 			this.path = hitResult.item as Paper.Path;
 
 			switch(hitResult.type )
@@ -120,13 +179,12 @@ export default class PaperJSExamComponent extends Vue {
 			}
 		}
 
-		this.movePath = (hitResult.type == 'fill');
+		this.movePath = ( hitResult.type == 'fill' );
 
 		if (this.movePath)
 		{
 			this.paper.project.activeLayer.addChild(hitResult.item);
 		}
-
 	}
 
 	onMouseUp(event:any) 
@@ -137,8 +195,11 @@ export default class PaperJSExamComponent extends Vue {
 	onMouseMove(event:ToolEvent)
 	{
 		this.paper.project.activeLayer.selected = false;
-		if (event.item)
+		
+		if (event.item && 
+			event.item.name != 'gridLine')
 		{
+			console.log(event.item);
 			event.item.selected = true;
 		}
 
@@ -146,6 +207,7 @@ export default class PaperJSExamComponent extends Vue {
 
 	onMouseDrag(event:ToolEvent) 
 	{
+		let modifiers = event.modifiers as any;
 		if (this.segment) 
 		{
 			this.segment.point = this.segment.point.add( event.delta );
@@ -154,6 +216,11 @@ export default class PaperJSExamComponent extends Vue {
 		else if (this.path) 
 		{
 			this.path.position = this.path.position.add(event.delta) ;
+		}
+		else 
+		{
+			//console.log('-------------- drag -------------------------:', event.delta, ' ,   ' , event );
+			//this.paper.view.center = this.paper.view.center.add( event.delta.multiply(1));
 		}
 	}
 }
