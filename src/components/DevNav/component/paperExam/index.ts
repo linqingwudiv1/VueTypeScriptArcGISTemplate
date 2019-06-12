@@ -141,7 +141,8 @@ export default class PaperJSExamComponent extends Vue {
 
 	}
 
-	onMouseDrag(event:any) {
+	onMouseDrag(event:any) 
+	{
 		if (this.segment) 
 		{
 			this.segment.point = this.segment.point.add( event.delta );
