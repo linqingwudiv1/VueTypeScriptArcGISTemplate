@@ -22,7 +22,7 @@ export default class PaperJSExamComponent extends Vue {
 
 	public paper = new Paper.PaperScope();
 	public segment:Paper.Segment; 
-	public path:Paper.Item;
+	public path:Paper.Path;
 	public movePath:boolean = false;
 	mounted() {
 		let canvas:HTMLCanvasElement = document.getElementById('paperCanvas') as HTMLCanvasElement;
@@ -35,9 +35,11 @@ export default class PaperJSExamComponent extends Vue {
 	
 		this.paper.setup(canvas);
 
-		console.log(this.paper.tool);
 		this.paper.tool = new Paper.Tool();
 		this.paper.tool.onMouseDown = this.onMouseDown;
+		this.paper.tool.onMouseUp = this.onMouseUp;
+		this.paper.tool.onMouseMove = this.onMouseMove;
+		this.paper.tool.onMouseDrag = this.onMouseDrag;
 
 		this.createPaths();
   }
@@ -76,23 +78,78 @@ export default class PaperJSExamComponent extends Vue {
    
 	onMouseDown(event:Paper.ToolEvent) {
 		this.segment = this.path = null;
+
 		let hitResult = this.paper.project.hitTest(event.point, this.hitOptions);
+
 		if (!hitResult)
 		{
 			return;
 		}
 
+		let modifiers:any = event.modifiers as any;
+		if (modifiers.shift) {
+			if (hitResult.type == 'segment') {
+				hitResult.segment.remove();
+			};
+			return;
+		}
+		
+	
 		if (hitResult) {
-			this.path = hitResult.item;
+			this.path = hitResult.item as Paper.Path;
+
+			switch(hitResult.type )
+			{
+				case 'segment':
+				{
+					this.segment = hitResult.segment;
+					break;
+				}
+				case 'stroke':
+				{
+					let location:Paper.CurveLocation = hitResult.location;
+					
+					this.segment = this.path.insert(location.index + 1, event.point);
+					this.path.smooth();
+					
+					break;
+				}
+			}
+		}
+
+		this.movePath = (hitResult.type == 'fill');
+
+		if (this.movePath)
+		{
+			this.paper.project.activeLayer.addChild(hitResult.item);
 		}
 
 	}
 
- 	onMouseDrag(event:any) {
-		console.log('You dragged the mouse!');
+	onMouseUp(event:any) 
+	{
+		console.log('You released the mouse!');
 	}
 
- 	onMouseUp(event:any) {
-		console.log('You released the mouse!');
+	onMouseMove(event:ToolEvent)
+	{
+		this.paper.project.activeLayer.selected = false;
+		if (event.item)
+		{
+			event.item.selected = true;
+		}
+
+	}
+
+	onMouseDrag(event:any) {
+		if (this.segment) 
+		{
+			this.segment.point = this.segment.point.add( event.delta );
+			this.path.smooth();
+		} 
+		else if (this.path) 
+		{
+			this.path.position =this.path.position.add(event.delta) ;
+		}
 	}
 }
