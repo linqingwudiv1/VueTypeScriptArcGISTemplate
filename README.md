@@ -1,6 +1,6 @@
 # Vue and typescript Template
 
-> Vue2.x+Element-UI 2.x+TypeScript2.x+EChart3.x+ArcGIS + ThreeJS + PaperJS Example
+> Vue2.x+Element-UI 2.x+TypeScript (ts) 2.x + EChart3.x+ArcGIS + ThreeJS + PaperJS Example
 
 ## Build Setup
 
