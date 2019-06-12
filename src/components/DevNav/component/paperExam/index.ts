@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import Paper, { ToolEvent } from 'paper'
+import Paper, { ToolEvent, Size } from 'paper'
 
 @Component({
 })
@@ -29,12 +29,13 @@ export default class PaperJSExamComponent extends Vue {
 
 		if (canvas == null)
 		{
-			this.$message('element not is HTMLCanvasElement');
+			this.$message('element not is [HTMLCanvasElement] Class');
 			return;
 		}
 	
 		this.paper.setup(canvas);
 
+		//Event Bind
 		this.paper.tool = new Paper.Tool();
 		this.paper.tool.onMouseDown = this.onMouseDown;
 		this.paper.tool.onMouseUp = this.onMouseUp;
@@ -44,22 +45,24 @@ export default class PaperJSExamComponent extends Vue {
 		this.createPaths();
   }
 
-  createPaths() {
-	let radiusDelta = this.values.maxRadius - this.values.minRadius;
-	let pointsDelta = this.values.maxPoints - this.values.minPoints;
-	for (let i = 0; i < this.values.paths; i++) {
-		let radius = this.values.minRadius + Math.random() * radiusDelta;
-		let points = this.values.minPoints + Math.floor(Math.random() * pointsDelta)	
-		let temp_center = this.paper.view.size.multiply ( Paper.Size.random());
+  createPaths() 
+  {
+	let radiusDelta:number = this.values.maxRadius - this.values.minRadius;
+	let pointsDelta:number = this.values.maxPoints - this.values.minPoints;
+	for (let i = 0; i < this.values.paths; i++) 
+	{
+		let radius:number = this.values.minRadius + Math.random() * radiusDelta;
+		let points:number = this.values.minPoints + Math.floor(Math.random() * pointsDelta);
+		let temp_center:Paper.Point =new Paper.Point(this.paper.view.size.multiply ( Paper.Size.random())) ;
 		let path:Paper.Path = this.createBlob( temp_center, radius, points);
-		let lightness = (Math.random() - 0.5) * 0.4 + 0.4;
-		let hue = Math.random() * 360;
+		let lightness:number = (Math.random() - 0.5) * 0.4 + 0.4;
+		let hue:number = Math.random() * 360;
 		path.fillColor = new Paper.Color({ hue: hue, saturation: 1, lightness: lightness });
 		path.strokeColor = new Paper.Color('black');
 	};
   }
 
-   createBlob(center:any, maxRadius:any, points:any): Paper.Path {
+   createBlob(center:Paper.Point, maxRadius:number, points:number): Paper.Path {
  		let path = new Paper.Path();
  		path.closed = true;
  		for (let i = 0; i < points; i++) {
@@ -79,7 +82,7 @@ export default class PaperJSExamComponent extends Vue {
 	onMouseDown(event:Paper.ToolEvent) {
 		this.segment = this.path = null;
 
-		let hitResult = this.paper.project.hitTest(event.point, this.hitOptions);
+		let hitResult:Paper.HitResult = this.paper.project.hitTest(event.point, this.hitOptions);
 
 		if (!hitResult)
 		{
@@ -141,7 +144,7 @@ export default class PaperJSExamComponent extends Vue {
 
 	}
 
-	onMouseDrag(event:any) 
+	onMouseDrag(event:ToolEvent) 
 	{
 		if (this.segment) 
 		{
@@ -150,7 +153,7 @@ export default class PaperJSExamComponent extends Vue {
 		} 
 		else if (this.path) 
 		{
-			this.path.position =this.path.position.add(event.delta) ;
+			this.path.position = this.path.position.add(event.delta) ;
 		}
 	}
 }
