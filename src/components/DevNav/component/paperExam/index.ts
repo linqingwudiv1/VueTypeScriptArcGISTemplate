@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import Paper, { ToolEvent, Size } from 'paper'
+import { setInterval } from 'timers';
 
 
 class SimplePanAndZoom
@@ -45,6 +46,12 @@ export default class PaperJSExamComponent extends Vue {
 		fill: true		,
 		tolerance: 5
 	};
+
+	public State:any = {
+		ZoomIning: false,
+		ZoomOuting: false
+	};
+
 	public SetupLength:number = 15;
 
 	public paper = new Paper.PaperScope();
@@ -98,6 +105,7 @@ export default class PaperJSExamComponent extends Vue {
 
 		linePath.strokeWidth = ( y % (this.SetupLength * 5) == 0 ? 2 : 1);
 		linePath.smooth();
+
 	}
   }
 
@@ -234,14 +242,49 @@ export default class PaperJSExamComponent extends Vue {
 	
 	}
 	
-	ZoomIn():void
+	ZoomInPress(event:any):void
 	{
-		this.paper.view.zoom += 0.01;
+		this.State.ZoomIning = true;
+		let temp_time = setInterval(()=>{
+			if (this.State.ZoomIning == true)
+			{
+				this.paper.view.zoom += 0.01;
+			}
+			else
+			{
+				clearInterval(temp_time);
+			}
+		} ,41.6);
+		console.log('ZoomIn');
+
 	}
 
-	ZoomOut():void
+	ZoomInRelease(event:any):void
 	{
-		this.paper.view.zoom -= 0.01;
 
+		console.log('ZoomIn Release');
+		this.State.ZoomIning = false;
+	}
+
+	ZoomOutPress(event:any):void
+	{
+		this.State.ZoomOuting = true;
+		let temp_time = setInterval(()=>{
+			if (this.State.ZoomOuting == true)
+			{
+				this.paper.view.zoom -= 0.01;
+			}
+			else
+			{
+				clearInterval(temp_time);
+			}
+		} ,41.6);
+		console.log('ZoomOut Press');
+	}
+
+	ZoomOutRelease(event:any):void
+	{
+		console.log('ZoomOut Release');
+		this.State.ZoomOuting = false;
 	}
 }

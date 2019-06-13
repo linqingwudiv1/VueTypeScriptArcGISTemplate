@@ -5,8 +5,9 @@
 
       <div class="floatbtngroup">
         <el-row>
+
           <el-col v-bind:span="24">
-            <el-button size="mini" v-on:click="ZoomIn">
+            <el-button size="mini" v-on:mousedown.native="ZoomInPress" v-on:mouseout.native="ZoomInRelease" v-on:mouseup.native="ZoomInRelease">
               加
             </el-button>
           </el-col>
@@ -14,7 +15,7 @@
 
         <el-row style="padding-top:3px;">
           <el-col v-bind:span="24">
-            <el-button size="mini" v-on:click="ZoomOut">
+            <el-button size="mini" v-on:mousedown.native="ZoomOutPress"  v-on:mouseout.native="ZoomOutRelease" v-on:mouseup.native="ZoomOutRelease">
               减
             </el-button>
           </el-col>
