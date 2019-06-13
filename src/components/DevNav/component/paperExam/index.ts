@@ -59,6 +59,7 @@ export default class PaperJSExamComponent extends Vue {
 	public path:Paper.Path;
 	public movePath:boolean = false;
 	mounted() {
+		window.addEventListener('mousewheel', this.onMouseWheel);
 		let canvas:HTMLCanvasElement = document.getElementById('paperCanvas') as HTMLCanvasElement;
 
 		if (canvas == null)
@@ -239,9 +240,10 @@ export default class PaperJSExamComponent extends Vue {
 
 	onMouseWheel(event:any)
 	{
-	
+		console.log('onMouseWheel' , event);
+		this.paper.view.zoom -= event.deltaY / 100 / 50;
 	}
-	
+
 	ZoomInPress(event:any):void
 	{
 		this.State.ZoomIning = true;
@@ -255,8 +257,8 @@ export default class PaperJSExamComponent extends Vue {
 				clearInterval(temp_time);
 			}
 		} ,41.6);
-		console.log('ZoomIn');
 
+		console.log('ZoomIn');
 	}
 
 	ZoomInRelease(event:any):void
@@ -287,4 +289,6 @@ export default class PaperJSExamComponent extends Vue {
 		console.log('ZoomOut Release');
 		this.State.ZoomOuting = false;
 	}
+
+
 }
