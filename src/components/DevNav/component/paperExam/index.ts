@@ -59,7 +59,7 @@ export default class PaperJSExamComponent extends Vue {
 	public path:Paper.Path;
 	public movePath:boolean = false;
 	mounted() {
-		window.addEventListener('mousewheel', this.onMouseWheel);
+
 		let canvas:HTMLCanvasElement = document.getElementById('paperCanvas') as HTMLCanvasElement;
 
 		if (canvas == null)
@@ -67,8 +67,12 @@ export default class PaperJSExamComponent extends Vue {
 			this.$message('element not is [HTMLCanvasElement] Class');
 			return;
 		}
+
+		canvas.addEventListener('mousewheel', this.onMouseWheel);
+		canvas.addEventListener('resize', this.onResize);
 	
 		this.paper.setup(canvas);
+
 
 		let width:number =  canvas.width;
 		let height:number = canvas.height;
@@ -81,6 +85,7 @@ export default class PaperJSExamComponent extends Vue {
 		this.paper.tool.onMouseUp = this.onMouseUp;
 		this.paper.tool.onMouseMove = this.onMouseMove;
 		this.paper.tool.onMouseDrag = this.onMouseDrag;
+
 		
 		this.createPaths();
 		this.paper.view.update();
@@ -89,63 +94,81 @@ export default class PaperJSExamComponent extends Vue {
   private createGrid(width:number, height:number) :void 
   {
 
-	for( let x = -width * 5; x < width * 5; x += this.SetupLength  )
-	{
-		let linePath = new Paper.Path.Line( new Paper.Point(x, -height * 5), new Paper.Point(x, height * 5) );
-		linePath.name = 'gridLine';
-		linePath.strokeColor  = new Paper.Color(52, 52, 52, 0.5) ;
-		linePath.strokeWidth = ( x % (this.SetupLength * 5) == 0 ? 2 : 1 );
-		linePath.smooth();
-	}
+		for( let x = -width * 5; x < width * 5; x += this.SetupLength  )
+		{
+			let linePath = new Paper.Path.Line( new Paper.Point(x, -height * 5), new Paper.Point(x, height * 5) );
+			linePath.name = 'gridLine';
+			linePath.strokeColor  = new Paper.Color(52, 52, 52, 0.5) ;
+			linePath.strokeWidth = ( x % (this.SetupLength * 5) == 0 ? 2 : 1 );
+			linePath.smooth();
+		}
+		for( let y = -height * 5; y < height * 5; y += this.SetupLength  )
+		{
+			let linePath = new Paper.Path.Line( new Paper.Point(-width * 5, y), new Paper.Point(width * 5, y) );
+			linePath.name = 'gridLine';
+			linePath.strokeColor  = new Paper.Color(52,52,52,0.5) ;
 
-	for( let y = -height * 5; y < height * 5; y += this.SetupLength  )
-	{
-		let linePath = new Paper.Path.Line( new Paper.Point(-width * 5, y), new Paper.Point(width * 5, y) );
-		linePath.name = 'gridLine';
-		linePath.strokeColor  = new Paper.Color(52,52,52,0.5) ;
-
-		linePath.strokeWidth = ( y % (this.SetupLength * 5) == 0 ? 2 : 1);
-		linePath.smooth();
-
-	}
+			linePath.strokeWidth = ( y % (this.SetupLength * 5) == 0 ? 2 : 1);
+			linePath.smooth();
+		}
   }
 
-  private createPaths() :void
-  {
-	let radiusDelta:number = this.values.maxRadius - this.values.minRadius;
-	let pointsDelta:number = this.values.maxPoints - this.values.minPoints;
-
-	for (let i = 0; i < this.values.paths; i++) 
-	{
-		let radius:number = this.values.minRadius + Math.random() * radiusDelta;
-		let points:number = this.values.minPoints + Math.floor(Math.random() * pointsDelta);
-		let temp_center:Paper.Point =new Paper.Point(this.paper.view.size.multiply ( Paper.Size.random())) ;
-		let path:Paper.Path = this.createBlob( temp_center, radius, points);
-		let lightness:number = (Math.random() - 0.5) * 0.4 + 0.4;
-		let hue:number = Math.random() * 360;
-		path.fillColor = new Paper.Color({ hue: hue, saturation: 1, lightness: lightness });
-		path.strokeColor = new Paper.Color('black');
-		path.strokeWidth = 5;
-	};
-  }
-
-  private createBlob(center:Paper.Point, maxRadius:number, points:number): Paper.Path {
- 		let path = new Paper.Path();
- 		path.closed = true;
-		 for (let i = 0; i < points; i++) 
-		 {
- 			let delta = new Paper.Point(
-			{
-				length: (maxRadius * 0.5) + (Math.random() * maxRadius * 0.5),
-				angle: (360 / points) * i
-			});
- 			path.add( center.add(delta) );
+   private createPaths() :void
+   {
+		let radiusDelta:number = this.values.maxRadius - this.values.minRadius;
+ 		let pointsDelta:number = this.values.maxPoints - this.values.minPoints;
+ 
+ 		for (let i = 0; i < this.values.paths; i++) 
+ 		{
+ 			let radius:number = this.values.minRadius + Math.random() * radiusDelta;
+ 			let points:number = this.values.minPoints + Math.floor(Math.random() * pointsDelta);
+ 			let temp_center:Paper.Point =new Paper.Point(this.paper.view.size.multiply ( Paper.Size.random())) ;
+ 			let path:Paper.Path = this.createBlob( temp_center, radius, points);
+ 			let lightness:number = (Math.random() - 0.5) * 0.4 + 0.4;
+ 			let hue:number = Math.random() * 360;
+ 			path.fillColor = new Paper.Color({ hue: hue, saturation: 1, lightness: lightness });
+ 			path.strokeColor = new Paper.Color('black');
+ 			path.strokeWidth = 5;
  		}
- 		path.smooth();
- 		return path;
    }
 
-   
+   private createBlob(center:Paper.Point, maxRadius:number, points:number): Paper.Path {
+  		let path = new Paper.Path();
+  		path.closed = true;
+ 		 for (let i = 0; i < points; i++) 
+ 		 {
+  			let delta = new Paper.Point(
+ 			{
+ 				length: (maxRadius * 0.5) + (Math.random() * maxRadius * 0.5),
+ 				angle: (360 / points) * i
+ 			});
+  			path.add( center.add(delta) );
+  		}
+  		path.smooth();
+  		return path;
+    }
+
+    onResize(event:any) 
+    {
+		//console.log('onResize ', event);
+		//this.paper.view.update();
+		//this.paper.view.
+	}   
+
+	/**
+	 * 
+	 * @param oldCenter 
+	 * @param deltaX 
+	 * @param deltaY 
+	 * @param factor 
+	 */
+	changeCenter(oldCenter:Paper.Point, deltaX:number, deltaY:number, factor:number)
+	{
+		let offset = new Paper.Point(deltaX, -deltaY);
+		offset = offset.multiply(factor);
+		oldCenter.add(offset);
+	}
+
 	onMouseDown(event:Paper.ToolEvent) {
 		this.segment = this.path = null;
 
@@ -220,7 +243,6 @@ export default class PaperJSExamComponent extends Vue {
 	onMouseDrag(event:ToolEvent) 
 	{
 
-
 		let modifiers = event.modifiers as any;
 		if (this.segment) 
 		{
@@ -233,14 +255,62 @@ export default class PaperJSExamComponent extends Vue {
 		}
 		else 
 		{
-
 			this.paper.view.center = this.paper.view.center.add( event.delta.multiply(-0.4));
 		}
 	}
 
+	/*
+	zoom(deltaY:number, point:Paper.Point)
+	{
+		if (!deltaY) 
+		{
+			return;
+		};
+		let oldZoom = this.paper.view.zoom,
+        oldCenter = this.paper.view.center,
+        viewPos = this.paper.view.viewToProject(point);
+		let newZoom = deltaY > 0 ? oldZoom * 1.05 : oldZoom / 1.05;
+		
+		if (!this.allowedZoom(newZoom)) 
+		{
+			return;
+		}
+
+		let zoomScale = oldZoom / newZoom ;
+		let centerAdjust = viewPos.subtract(oldCenter);
+		let offset = viewPos.subtract(centerAdjust.multiply(zoomScale)).subtract(oldCenter);
+	
+		this.paper.view.center = this.paper.view.center.add(offset);
+	}
+	*/
+
+	/*
+	allowedZoom(zoom:number)
+	{
+		if (zoom !== paper.view.zoom)
+		{
+			this.paper.view.zoom = zoom;
+			return zoom;
+		}
+
+		return null;
+	}
+
+	allowedZoom(zoom:number)
+	{
+		if(zoom !== this.paper.view.zoom)
+		{
+
+		}
+	}
+
+	*/
+
 	onMouseWheel(event:any)
 	{
-		console.log('onMouseWheel' , event);
+		//this.zoom(event.);
+		//this.zoom(event.deltaY);
+		//console.log('onMouseWheel' , event);
 		this.paper.view.zoom -= event.deltaY / 100 / 50;
 	}
 
@@ -259,6 +329,7 @@ export default class PaperJSExamComponent extends Vue {
 		} ,41.6);
 
 		console.log('ZoomIn');
+
 	}
 
 	ZoomInRelease(event:any):void
