@@ -290,9 +290,7 @@ export default class PaperJSExamComponent extends Vue {
 				clearInterval(temp_time);
 			}
 		} ,41.6);
-
 		console.log('ZoomIn');
-
 	}
 
 	ZoomInRelease(event:any):void
