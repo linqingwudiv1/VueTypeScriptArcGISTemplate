@@ -160,7 +160,7 @@ export default class PaperJSExamComponent extends Vue {
 
     onResize(event:any) 
     {
-		
+
 	}   
 
 	onMouseDown(event:Paper.ToolEvent) {
@@ -323,6 +323,4 @@ export default class PaperJSExamComponent extends Vue {
 		console.log('ZoomOut Release');
 		this.State.ZoomOuting = false;
 	}
-
-
 }
