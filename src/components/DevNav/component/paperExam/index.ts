@@ -86,9 +86,19 @@ export default class PaperJSExamComponent extends Vue {
 		this.paper.tool.onMouseMove = this.onMouseMove;
 		this.paper.tool.onMouseDrag = this.onMouseDrag;
 
-		
+
 		this.createPaths();
 		this.paper.view.update();
+
+
+		let url = 'static/img/unreal.png';
+		let raster = new Paper.Raster(url);
+		console.log (raster.view.center);
+		raster.onLoad = () =>
+		{
+			console.log('imag Loaded');
+		};
+		
   	}
 
   private createGrid(width:number, height:number) :void 
@@ -150,24 +160,8 @@ export default class PaperJSExamComponent extends Vue {
 
     onResize(event:any) 
     {
-		//console.log('onResize ', event);
-		//this.paper.view.update();
-		//this.paper.view.
+		
 	}   
-
-	/**
-	 * 
-	 * @param oldCenter 
-	 * @param deltaX 
-	 * @param deltaY 
-	 * @param factor 
-	 */
-	changeCenter(oldCenter:Paper.Point, deltaX:number, deltaY:number, factor:number)
-	{
-		let offset = new Paper.Point(deltaX, -deltaY);
-		offset = offset.multiply(factor);
-		oldCenter.add(offset);
-	}
 
 	onMouseDown(event:Paper.ToolEvent) {
 		this.segment = this.path = null;
@@ -259,58 +253,27 @@ export default class PaperJSExamComponent extends Vue {
 		}
 	}
 
-	/*
-	zoom(deltaY:number, point:Paper.Point)
+	changeZoom(oldZoom:any, delta:number) 
 	{
-		if (!deltaY) 
-		{
-			return;
-		};
-		let oldZoom = this.paper.view.zoom,
-        oldCenter = this.paper.view.center,
-        viewPos = this.paper.view.viewToProject(point);
-		let newZoom = deltaY > 0 ? oldZoom * 1.05 : oldZoom / 1.05;
-		
-		if (!this.allowedZoom(newZoom)) 
-		{
-			return;
+		const factor = 1.05;
+		if (delta < 0) {
+		  return oldZoom * factor;
 		}
-
-		let zoomScale = oldZoom / newZoom ;
-		let centerAdjust = viewPos.subtract(oldCenter);
-		let offset = viewPos.subtract(centerAdjust.multiply(zoomScale)).subtract(oldCenter);
-	
-		this.paper.view.center = this.paper.view.center.add(offset);
-	}
-	*/
-
-	/*
-	allowedZoom(zoom:number)
-	{
-		if (zoom !== paper.view.zoom)
-		{
-			this.paper.view.zoom = zoom;
-			return zoom;
+		if (delta > 0) {
+		  return oldZoom / factor;
 		}
-
-		return null;
+		return oldZoom;
 	}
 
-	allowedZoom(zoom:number)
+	changeCenter(oldCenter:Paper.Point, deltaX:number, deltaY:number, factor:number) :Paper.Point
 	{
-		if(zoom !== this.paper.view.zoom)
-		{
-
-		}
+		let offset = new paper.Point(deltaX, -deltaY);
+		offset = offset.multiply(factor);
+		return oldCenter.add(offset);
 	}
-
-	*/
 
 	onMouseWheel(event:any)
 	{
-		//this.zoom(event.);
-		//this.zoom(event.deltaY);
-		//console.log('onMouseWheel' , event);
 		this.paper.view.zoom -= event.deltaY / 100 / 50;
 	}
 
