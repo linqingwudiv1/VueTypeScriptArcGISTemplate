@@ -52,6 +52,8 @@ module.exports = {
     // Template for index.html
     DevNav: path.resolve(__dirname, '../dist/DevNav.html'),
     DevHome: path.resolve(__dirname, '../dist/index.html'),
+    Panolens: path.resolve(__dirname, '../dist/panolens.html'),
+    // PathsvHome: path.resolve(__dirname, '../dist/index.html'),
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',

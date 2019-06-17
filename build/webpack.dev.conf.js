@@ -54,6 +54,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true,
       chunks:['DevHome']
     }),
+    new HtmlWebpackPlugin({
+      filename: 'src/startup/Panolens/app.html',
+      template: 'src/startup/Panolens/app.html',
+      inject: true,
+      chunks:['Panolens']
+    })
   ]
 })
 

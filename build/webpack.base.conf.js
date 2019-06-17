@@ -12,7 +12,8 @@ module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
     DevNav: './src/startup/DevNav/app.js',
-    DevHome: './src/startup/DevHome/app.js'
+    DevHome: './src/startup/DevHome/app.js',
+    Panolens: './src/startup/Panolens/app.js'
   },
   output: {
     path: config.build.assetsRoot,
