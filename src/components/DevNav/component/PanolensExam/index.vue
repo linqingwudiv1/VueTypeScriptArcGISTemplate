@@ -1,6 +1,6 @@
 <template>
     <div id="PanolensDiv">
-          <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> infospot example. Images from Google Streetview API</div>
+          <!-- <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> infospot example. Images from Google Streetview API</div> -->
     
     <div id="desc-container" style="display:none">
       <iframe src="https://www.youtube.com/embed/D7icsuamx5E"></iframe>

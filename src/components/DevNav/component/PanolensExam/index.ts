@@ -13,7 +13,7 @@ export default class PanolensExamComponent extends Vue {
 
 		var infospot, infospot2, panorama:any, viewer:any;
 
-		infospot = new PANOLENS.Infospot(500,'../../../../static/img/s.png');
+		infospot = new PANOLENS.Infospot(500,'../../../../static/img/s.png',false);
 		console.log(infospot);
 		infospot.addEventListener('click',function ()
 		{
@@ -35,7 +35,8 @@ export default class PanolensExamComponent extends Vue {
 		viewer = new PANOLENS.Viewer(
 			{
 				container:this.canvas,
-				output:'overlay'
+				output:'overlay',
+				autoHideInfospot :false
 			});
 
 
@@ -43,15 +44,18 @@ export default class PanolensExamComponent extends Vue {
 		viewer.outputPositionEx = function ()
 		{
 			const intersects = this.raycaster.intersectObject( this.panorama, true );
+
 			if ( intersects.length > 0 ) {
 				const point = intersects[ 0 ].point.clone();
 				const converter = new THREE.Vector3( -1, 1, 1 );
 				const world = this.panorama.getWorldPosition( new THREE.Vector3() );
+
 				point.sub( world ).multiply( converter );
 				return point;	
 			}
 			return null;
 		};
+
 		console.log(viewer);
 
 		setInterval(function (){
