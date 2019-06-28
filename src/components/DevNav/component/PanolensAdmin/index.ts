@@ -24,13 +24,14 @@ class PanoramaWrapper
 	constructor(id:string)
 	{
 		let canvasElement = document.getElementById(id);
+		console.log(canvasElement);
 		this.viewer = new PANOLENS.Viewer(
 			{
 				container:canvasElement ,
-				//output:'overlay',
+				output:'overlay',
 				autoHideInfospot :false,
 				controlBar: false,
-				horizontalView: true
+				//horizontalView: true
 			});
 	}
 	public viewer:any;
@@ -44,7 +45,45 @@ export default class PanolensAdminComponent extends Vue {
 	public progressElement:HTMLElement;
 
 	public arr_panorama:Array<any> = [];
+
+	public tree_panorama:any = [{
+		label: '一级 1',
+		children: [{
+		  label: '二级 1-1',
+		  children: [{
+			label: '三级 1-1-1'
+		  }]
+		}]
+	  }, {
+		label: '一级 2',
+		children: [{
+		  label: '二级 2-1',
+		  children: [{
+			label: '三级 2-1-1'
+		  }]
+		}, {
+		  label: '二级 2-2',
+		  children: [{
+			label: '三级 2-2-1'
+		  }]
+		}]
+	  }, {
+		label: '一级 3',
+		children: [{
+		  label: '二级 3-1',
+		  children: [{
+			label: '三级 3-1-1'
+		  }]
+		}, {
+		  label: '二级 3-2',
+		  children: [{
+			label: '三级 3-2-1'
+		  }]
+		}]
+	  }];
+
 	public dialogVisible:boolean = false;
+
 
 	private panoramaWrapper:PanoramaWrapper = null;
 	mounted() 
@@ -53,7 +92,7 @@ export default class PanolensAdminComponent extends Vue {
 		console.log('mounted');
 		console.log(this.panoramaWrapper);
 		this.init();
-
+		
 
 		//setInterval(function (){
 		//	console.log(viewer.outputPositionEx());
@@ -83,7 +122,6 @@ export default class PanolensAdminComponent extends Vue {
 	  public init():boolean
 	  {
 		  this.progressElement 	= document.getElementById( 'progress' );
-		  //this.canvasElement 	= document.getElementById('panolensCanvas');
 
 		  this.initPanorama();
 		  return true;
@@ -91,7 +129,7 @@ export default class PanolensAdminComponent extends Vue {
 
 	  public initPanorama():boolean
 	  {   
-		this.panoramaWrapper = new PanoramaWrapper ('panolensCanvas');
+		this.panoramaWrapper = new PanoramaWrapper ('panolensCanvasDiv');
 		this.loadScene();
 		
 		let infospot = new PANOLENS.Infospot(500, '../../../../static/img/s.png', true);

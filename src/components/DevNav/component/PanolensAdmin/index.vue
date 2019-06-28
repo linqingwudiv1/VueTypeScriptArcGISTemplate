@@ -1,33 +1,45 @@
 <template>
-<div id="PanolensDiv">
+<div id="PanolensAdminDiv">
 
-    <div class="credit">疏散通道720° VR全景展示Demo</div>
+    <div class="credit">编辑器</div>
     <div id="progress"></div>
-
+    
+    <el-row style="height:100%;">
+        <el-col v-bind:span="6"  style="height:100%;">
+            <el-tree v-bind:data="tree_panorama"></el-tree>
+        </el-col>
+        <el-col v-bind:span="18"  style="height:100%;">
+             <div id="panolensCanvasDiv"></div>
+        </el-col>
+    </el-row>
+    
     <div class="credit-footer">
         <el-button type="text" v-on:click="gotofocus">定位疏散点1</el-button>
-
     </div>
 
-        <div class="credit-footer" style="bottom : 55px;">
+    <div class="credit-footer" style="bottom : 55px;">
         <el-button type="text" v-on:click="openDialog">疏散平面图</el-button>
     </div>
-
-  <el-dialog title="平面图"  :visible.sync="dialogVisible"  width="95%" custom-class="panelDialog">
-          <el-card :body-style="{ padding: '0px' }">
-                <img src="../../../../../static/img/q.jpg" class="image" style="width:100%">
-                <div style="padding: 14px;">
-
-                </div>
-              </el-card>
-  </el-dialog>
-
 </div>
 </template>
 
-<script lang="ts" src="./index.ts">
-</script>
-    
+<script lang="ts" src="./index.ts"></script>
+
+<style lang="stylus">
+#PanolensAdminDiv
+    height  : 100%;
+    width   : 100%;
+    .menu
+        position    : absolute;
+        top         : 50px;
+        left        : 0;
+        width       : 30%;
+    #panolensCanvasDiv
+        height      : 100%;
+        width       : 100%;
+        background  : red;
+</style>
+
 <style>
 #progress {
     width: 0;
@@ -43,17 +55,16 @@
     opacity: 0;
 }
 
-
 .panelDialog
 {
-  background: rgba(31,31,31,0.9);
-
+    background: rgba(31,31,31,0.9);
 }
 
 .panelDialog .el-dialog__title
 {
-  color: white;
+    color: white;
 }
+
 .credit {
     position: absolute;
     text-align: center;
